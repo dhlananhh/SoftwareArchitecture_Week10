@@ -1,4 +1,4 @@
-# Software Architecture Practice Exercises - Week 10: MICROSERVICE
+# Software Architecture Practice Exercises - Week 10: MICROSERVICES
 
 ## Submission Information
 
@@ -27,23 +27,7 @@ The system consists of the following microservices, each responsible for a speci
 
 ### Architecture Diagram
 
-```
-+-------------------+
-|    API Gateway    | (Port: 8080)
-+-------------------+
-          |
-          | Routes requests
-          |
-+-------------------+-------------------+-------------------+
-| Product Service   | Order Service     | Customer Service  | ...
-| (Port: 8081)      | (Port: 8082)      | (Port: 8083)      |
-| MariaDB           | MariaDB           | MariaDB           |
-+-------------------+-------------------+-------------------+
-| Payment Service   | Inventory Service | Shipping Service  |
-| (Port: 8084)      | (Port: 8085)      | (Port: 8086)      |
-| MariaDB           | MariaDB           | MariaDB           |
-+-------------------+-------------------+-------------------+
-```
+![Microservices Diagram](proof_images/Microservices_Diagram.png)
 
 ### Technologies Used
 
