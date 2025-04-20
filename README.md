@@ -353,10 +353,6 @@ docker-compose up --scale product-service=2
 
 This project is licensed under the MIT License.
 
-## Contact
-
-For questions or contributions, please contact the project maintainers.
-
 
 ---
 
