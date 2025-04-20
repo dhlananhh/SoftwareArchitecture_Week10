@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  customer-service:
+    build: .
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://customer-db:3306/customer_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - customer-db
+    networks:
+      - sales-network
+
+  customer-db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: customer_db
+    ports:
+      - "3309:3306"
+    volumes:
+      - customer-db-data:/var/lib/mysql
+    networks:
+      - sales-network
+
+volumes:
+  customer-db-data:
+
+networks:
+  sales-network:
+    driver: bridge
