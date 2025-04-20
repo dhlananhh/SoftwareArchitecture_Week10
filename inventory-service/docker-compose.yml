@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  inventory-service:
+    build: .
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://inventory-db:3306/inventory_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - inventory-db
+    networks:
+      - sales-network
+
+  inventory-db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: inventory_db
+    ports:
+      - "3311:3306"
+    volumes:
+      - inventory-db-data:/var/lib/mysql
+    networks:
+      - sales-network
+
+volumes:
+  inventory-db-data:
+
+networks:
+  sales-network:
+    driver: bridge

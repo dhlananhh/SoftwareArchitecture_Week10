@@ -1,0 +1,39 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: inventory-service
+  datasource:
+    url: jdbc:mariadb://inventory-db:3306/inventory_db
+    username: root
+    password: password
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventoryService:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+  retry:
+    instances:
+      inventoryService:
+        maxAttempts: 3
+        waitDuration: 500
+  ratelimiter:
+    instances:
+      inventoryService:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1000
+        timeoutDuration: 0
+  timelimiter:
+    instances:
+      inventoryService:
+        timeoutDuration: 2000
