@@ -1,0 +1,39 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: product-service
+  datasource:
+    url: jdbc:mariadb://product-db:3306/product_db
+    username: root
+    password: password
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      productService:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+  retry:
+    instances:
+      productService:
+        maxAttempts: 3
+        waitDuration: 500
+  ratelimiter:
+    instances:
+      productService:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1000
+        timeoutDuration: 0
+  timelimiter:
+    instances:
+      productService:
+        timeoutDuration: 2000
